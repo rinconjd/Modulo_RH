@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modulo_RH", "Modulo_RH.csproj", "{AE661366-66FF-B856-5CD3-A9E7E6F233EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE661366-66FF-B856-5CD3-A9E7E6F233EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE661366-66FF-B856-5CD3-A9E7E6F233EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE661366-66FF-B856-5CD3-A9E7E6F233EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE661366-66FF-B856-5CD3-A9E7E6F233EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F5450B8-71E3-44F7-BD7D-4938D250960D}
+	EndGlobalSection
+EndGlobal

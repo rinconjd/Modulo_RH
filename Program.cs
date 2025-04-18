@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RecursosHumanosAPI.Repositories;
 using RecursosHumanosAPI.Services;
 
@@ -13,6 +14,10 @@ builder.Services.AddSwaggerGen();
 // Inyección de dependencias
 builder.Services.AddSingleton<IEmpleadoRepository, EmpleadoRepository>();
 builder.Services.AddSingleton<EmpleadoService>();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 

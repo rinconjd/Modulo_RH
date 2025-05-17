@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecursosHumanosAPI.Models;
 using RecursosHumanosAPI.Services;
@@ -33,12 +34,18 @@ namespace RecursosHumanosAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, Empleado emp)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Update(int id, [FromBody] Empleado emp)
         {
             emp.Id = id;
-            _servicio.Actualizar(emp);
-            return NoContent();
+            var resultado = _servicio.ActualizarEmpleado(emp);
+
+            if (resultado == "Empleado no encontrado")
+                return NotFound(resultado);
+
+            return Ok(resultado);
         }
+
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

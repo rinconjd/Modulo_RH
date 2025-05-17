@@ -317,3 +317,5 @@ C:\Arquitectura\Proyecto\RH\Modulo_RH\obj\Debug\net9.0\refint\Modulo_RH.dll
 C:\Arquitectura\Proyecto\RH\Modulo_RH\obj\Debug\net9.0\Modulo_RH.pdb
 C:\Arquitectura\Proyecto\RH\Modulo_RH\obj\Debug\net9.0\Modulo_RH.genruntimeconfig.cache
 C:\Arquitectura\Proyecto\RH\Modulo_RH\obj\Debug\net9.0\ref\Modulo_RH.dll
+C:\Arquitectura\Proyecto\RH\Modulo_RH\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Arquitectura\Proyecto\RH\Modulo_RH\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

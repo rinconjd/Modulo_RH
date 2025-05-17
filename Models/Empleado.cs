@@ -3,10 +3,13 @@ namespace RecursosHumanosAPI.Models
     public class Empleado
     {
         public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Documento { get; set; }
-        public string Cargo { get; set; }
-        public string Area { get; set; }
+        public required string Nombre { get; set; }
+        public required string Documento { get; set; }
+        public string? Cargo { get; set; }
+        public string? Area { get; set; }
         public DateTime FechaIngreso { get; set; }
+
+        public int? UsuarioId { get; set; }
+        public Usuario? Usuario { get; set; }
     }
 }

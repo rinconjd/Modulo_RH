@@ -61,6 +61,51 @@ Edita el archivo `appsettings.json`:
 
 ---
 
+## 🔐 Clave secreta JWT
+
+El proyecto utiliza autenticación basada en JWT (JSON Web Tokens) para proteger los endpoints. Para que el sistema genere y valide correctamente los tokens, es necesario definir una clave secreta robusta en el archivo `appsettings.json`:
+
+```json
+"JwtSettings": {
+  "SecretKey": "TU_CLAVE_SECRETA_DE_32+_CARACTERES",
+  "Issuer": "ModuloRH",
+  "Audience": "ModuloRHUsuarios"
+}
+```
+
+### ✅ Recomendaciones:
+
+- La `SecretKey` debe tener **mínimo 32 caracteres** para ser compatible con el algoritmo `HS256`.
+- Nunca uses claves débiles como `"123"` o `"clave"`.
+- **No subas la clave real a GitHub.** Agrega `appsettings.json` a tu `.gitignore` y proporciona un `appsettings.Development.json` como plantilla de ejemplo.
+
+---
+
+### 🧺 ¿Cómo usar el token en Swagger?
+
+1. Haz una petición `POST /api/login` con:
+
+```json
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+2. Copia el `token` recibido.
+
+3. En Swagger UI, haz clic en el botón **Authorize 🔒**.
+
+4. Escribe el token así:
+
+```
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+5. Ahora podrás consumir todos los endpoints protegidos como administrador.
+
+---
+
 ## 🧱 Base de datos
 
 ### 4. Crear la base de datos (usando EF Core)
@@ -98,14 +143,14 @@ Desde Swagger UI podrás probar todos los endpoints REST del CRUD.
 
 ## 📦 Endpoints disponibles
 
-| Método | Ruta                  | Descripción                |
-|--------|-----------------------|----------------------------|
-| GET    | /api/empleados        | Listar todos los empleados |
-| GET    | /api/empleados/{id}   | Obtener empleado por ID     |
-| POST   | /api/empleados        | Crear nuevo empleado        |
-| PUT    | /api/empleados/{id}   | Actualizar empleado         |
-| DELETE | /api/empleados/{id}   | Eliminar empleado           |
+| Método | Ruta                         | Descripción                             |
+|--------|------------------------------|-----------------------------------------|
+| POST   | /api/login                   | Obtener token de autenticación          |
+| GET    | /api/empleados               | Listar todos los empleados              |
+| GET    | /api/empleados/{id}          | Obtener empleado por ID                 |
+| GET    | /api/empleados/filtrar       | Filtrar empleados por múltiples campos  |
+| POST   | /api/empleados               | Crear nuevo empleado                    |
+| PUT    | /api/empleados/{id}          | Actualizar empleado                     |
+| DELETE | /api/empleados/{id}          | Eliminar empleado                       |
 
 ---
-
-

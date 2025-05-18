@@ -53,5 +53,32 @@ namespace RecursosHumanosAPI.Controllers
             _servicio.Eliminar(id);
             return NoContent();
         }
+
+        [HttpGet("filtrar")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult FiltrarEmpleados(
+            string? nombre,
+            string? cargo,
+            string? area,
+            string? rolUsuario)
+        {
+            var lista = _servicio.ObtenerTodos();
+
+            if (!string.IsNullOrEmpty(nombre))
+                lista = lista.Where(e => e.Nombre.Contains(nombre)).ToList();
+
+            if (!string.IsNullOrEmpty(cargo))
+                lista = lista.Where(e => e.Cargo == cargo).ToList();
+
+            if (!string.IsNullOrEmpty(area))
+                lista = lista.Where(e => e.Area == area).ToList();
+
+            if (!string.IsNullOrEmpty(rolUsuario))
+                lista = lista.Where(e => e.Usuario != null && e.Usuario.Rol == rolUsuario).ToList();
+
+            return Ok(lista);
+        }
+
+
     }
 }

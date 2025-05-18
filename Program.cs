@@ -19,6 +19,7 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<EmpleadoService>();
 
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ModuloRH API", Version = "v1" });
@@ -83,6 +84,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Inicializa la base de datos (Sólo para entorno de desarrollo)
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    // 🔄 Elimina y recrea la base de datos en cada ejecución
+    context.Database.EnsureDeleted();    // Elimina la DB
+    context.Database.Migrate();          // Aplica todas las migraciones (o usa EnsureCreated para esquemas simples)
+
+    // Opcional: agregar datos de prueba
+    //DataSeeder.SeedInicial(context);
+}
+
+
 app.UseHttpsRedirection();
 
 // Usa controladores definidos en la carpeta Controllers/
@@ -114,8 +129,27 @@ using (var scope = app.Services.CreateScope())
             Usuario = usuario
         };
 
+        var usuario2 = new Usuario
+        {
+            Username = "juanperez",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("jp123"),
+            Rol = "Empleado"
+        };
+
+        var empleado2 = new Empleado
+        {
+            Nombre = "Juan Pérez",
+            Documento = "123456789",
+            Cargo = "Analista",
+            Area = "TI",
+            FechaIngreso = DateTime.UtcNow,
+            Usuario = usuario2
+        };
+
         context.Usuarios.Add(usuario);
         context.Empleados.Add(empleado);
+        context.Usuarios.Add(usuario2);
+        context.Empleados.Add(empleado2);
         context.SaveChanges();
     }
 }

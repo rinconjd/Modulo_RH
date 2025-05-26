@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using RecursosHumanosAPI.Models;
 
 public class Usuario
@@ -7,6 +8,7 @@ public class Usuario
     public required string PasswordHash { get; set; } // Idealmente encriptado
     public required string Rol { get; set; }
 
+    [JsonIgnore]
     public Empleado? Empleado { get; set; }
 
 }

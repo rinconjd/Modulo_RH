@@ -1,37 +1,51 @@
 using RecursosHumanosAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RecursosHumanosAPI.Repositories
 {
     public class EmpleadoRepository : IEmpleadoRepository
     {
-        private readonly List<Empleado> empleados = new();
+        private readonly AppDbContext _context;
 
-        public List<Empleado> GetAll() => empleados;
+        public EmpleadoRepository(AppDbContext context)
+        {
+            _context = context;
+        }
 
-        public Empleado? GetById(int id) => empleados.FirstOrDefault(e => e.Id == id);
+        public List<Empleado> GetAll()
+        {
+            return _context.Empleados
+                .Include(e => e.Usuario) // si la entidad tiene relación
+                .ToList();
+        }
+
+        public Empleado? GetById(int id)
+        {
+            return _context.Empleados
+                .Include(e => e.Usuario)
+                .FirstOrDefault(e => e.Id == id);
+        }
 
         public void Create(Empleado empleado)
         {
-            empleado.Id = empleados.Count > 0 ? empleados.Max(e => e.Id) + 1 : 1;
-            empleados.Add(empleado);
+            _context.Empleados.Add(empleado);
+            _context.SaveChanges();
         }
 
         public void Update(Empleado empleado)
         {
-            var actual = GetById(empleado.Id);
-            if (actual == null) return;
-
-            actual.Nombre = empleado.Nombre;
-            actual.Documento = empleado.Documento;
-            actual.Cargo = empleado.Cargo;
-            actual.Area = empleado.Area;
-            actual.FechaIngreso = empleado.FechaIngreso;
+            _context.Empleados.Update(empleado);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var emp = GetById(id);
-            if (emp != null) empleados.Remove(emp);
+            var emp = _context.Empleados.Find(id);
+            if (emp != null)
+            {
+                _context.Empleados.Remove(emp);
+                _context.SaveChanges();
+            }
         }
     }
 }

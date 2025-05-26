@@ -69,7 +69,7 @@ builder.Services.AddAuthorization();
 
 
 // Inyección de dependencias
-builder.Services.AddSingleton<IEmpleadoRepository, EmpleadoRepository>();
+builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -123,7 +123,7 @@ using (var scope = app.Services.CreateScope())
         {
             Nombre = "Administrador General",
             Documento = "123456789",
-            Cargo = "Administrador",
+            Rol = "Administrador",
             Area = "TI",
             FechaIngreso = DateTime.UtcNow,
             Usuario = usuario
@@ -140,7 +140,7 @@ using (var scope = app.Services.CreateScope())
         {
             Nombre = "Juan Pérez",
             Documento = "123456789",
-            Cargo = "Analista",
+            Rol = "Analista",
             Area = "TI",
             FechaIngreso = DateTime.UtcNow,
             Usuario = usuario2

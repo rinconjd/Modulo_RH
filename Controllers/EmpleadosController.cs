@@ -68,7 +68,7 @@ namespace RecursosHumanosAPI.Controllers
                 lista = lista.Where(e => e.Nombre.Contains(nombre)).ToList();
 
             if (!string.IsNullOrEmpty(cargo))
-                lista = lista.Where(e => e.Cargo == cargo).ToList();
+                lista = lista.Where(e => e.Rol == cargo).ToList();
 
             if (!string.IsNullOrEmpty(area))
                 lista = lista.Where(e => e.Area == area).ToList();

@@ -6,9 +6,8 @@ namespace RecursosHumanosAPI.Models
     {
         public int Id { get; set; }
         public required string Nombre { get; set; }
-        public required string Documento { get; set; }
+        public string? Cedula { get; set; }
         public string? Rol { get; set; }
-        public string? Area { get; set; }
         public DateTime FechaIngreso { get; set; }
 
         public int? UsuarioId { get; set; }

@@ -8,7 +8,10 @@ public class AppDbContext : DbContext
     public DbSet<Empleado> Empleados { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Cliente> Clientes { get; set; }
-    
+
+    public DbSet<Transaccion> Transacciones { get; set; }
+    //public DbSet<Compra> Compras { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -18,7 +21,21 @@ public class AppDbContext : DbContext
             .HasOne(e => e.Usuario)
             .WithOne(u => u.Empleado)
             .HasForeignKey<Empleado>(e => e.UsuarioId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Cascade); // <--- Agrega esta línea
+
+        modelBuilder.Entity<Cliente>()
+            .HasOne(c => c.Usuario)
+            .WithOne()
+            .HasForeignKey<Cliente>(c => c.UsuarioId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // modelBuilder.Entity<Compra>()
+        //     .HasOne<Cliente>() // Si tienes la navegación, ponla aquí
+        //     .WithMany()
+        //     .HasForeignKey(c => c.ClienteCedula)
+        //     .OnDelete(DeleteBehavior.Cascade);
     }
+
 
 }

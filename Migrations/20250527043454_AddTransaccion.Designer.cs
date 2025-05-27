@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Modulo_RH.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250527043454_AddTransaccion")]
+    partial class AddTransaccion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +53,7 @@ namespace Modulo_RH.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId")
-                        .IsUnique()
-                        .HasFilter("[UsuarioId] IS NOT NULL");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Clientes");
                 });
@@ -65,6 +66,9 @@ namespace Modulo_RH.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Cedula")
                         .HasColumnType("nvarchar(max)");
 
@@ -76,6 +80,7 @@ namespace Modulo_RH.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rol")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UsuarioId")
@@ -105,8 +110,8 @@ namespace Modulo_RH.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Monto")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Monto")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -141,9 +146,8 @@ namespace Modulo_RH.Migrations
             modelBuilder.Entity("RecursosHumanosAPI.Models.Cliente", b =>
                 {
                     b.HasOne("Usuario", "Usuario")
-                        .WithOne()
-                        .HasForeignKey("RecursosHumanosAPI.Models.Cliente", "UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Usuario");
                 });
@@ -152,8 +156,7 @@ namespace Modulo_RH.Migrations
                 {
                     b.HasOne("Usuario", "Usuario")
                         .WithOne("Empleado")
-                        .HasForeignKey("RecursosHumanosAPI.Models.Empleado", "UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RecursosHumanosAPI.Models.Empleado", "UsuarioId");
 
                     b.Navigation("Usuario");
                 });

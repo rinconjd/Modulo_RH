@@ -18,7 +18,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<EmpleadoService>();
-
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<ITransaccionRepository, TransaccionRepository>();
+builder.Services.AddScoped<TransaccionService>();
+builder.Services.AddScoped<ITransaccionRepository, TransaccionRepository>();
+builder.Services.AddScoped<TransaccionService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -67,6 +72,16 @@ builder.Services.AddAuthentication("Bearer")
 
 builder.Services.AddAuthorization();
 
+// Agrega esto después de builder.Services.AddAuthorization();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 // Inyección de dependencias
 builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>();
@@ -100,6 +115,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll");
+
 // Usa controladores definidos en la carpeta Controllers/
 app.MapControllers();
 
@@ -122,9 +139,8 @@ using (var scope = app.Services.CreateScope())
         var empleado = new Empleado
         {
             Nombre = "Administrador General",
-            Documento = "102030405",
+            Cedula = "102030405",
             Rol = "Administrador",
-            Area = "TI",
             FechaIngreso = DateTime.UtcNow,
             Usuario = usuario
         };
@@ -133,15 +149,14 @@ using (var scope = app.Services.CreateScope())
         {
             Username = "juanperez",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("jp123"),
-            Rol = "Empleado"
+            Rol = "Clientes"
         };
 
         var empleado2 = new Empleado
         {
             Nombre = "Juan Pérez",
-            Documento = "123456789",
-            Rol = "Empleado",
-            Area = "TI",
+            Cedula = "123456789",
+            Rol = "Clientes",
             FechaIngreso = DateTime.UtcNow,
             Usuario = usuario2
         };
@@ -150,15 +165,14 @@ using (var scope = app.Services.CreateScope())
         {
             Username = "diegomez",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("dg123"),
-            Rol = "EmpleadoInventario"
+            Rol = "Inventario"
         };
 
         var empleado3 = new Empleado
         {
             Nombre = "Diego Gómez",
-            Documento = "100101010",
-            Rol = "EmpleadoInventario",
-            Area = "TI",
+            Cedula = "100101010",
+            Rol = "Inventario",
             FechaIngreso = DateTime.UtcNow,
             Usuario = usuario3
         };

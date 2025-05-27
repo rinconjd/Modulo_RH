@@ -34,16 +34,33 @@ namespace RecursosHumanosAPI.Repositories
 
         public void Update(Empleado empleado)
         {
-            _context.Empleados.Update(empleado);
+            var existente = _context.Empleados
+                .Include(e => e.Usuario)
+                .FirstOrDefault(e => e.Id == empleado.Id);
+
+            if (existente == null)
+                return;
+
+            // Actualiza solo las propiedades necesarias
+            existente.Nombre = empleado.Nombre;
+            existente.Cedula = empleado.Cedula;
+            existente.Rol = empleado.Rol;
+            existente.FechaIngreso = empleado.FechaIngreso;
+            existente.UsuarioId = empleado.UsuarioId;
+
             _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var emp = _context.Empleados.Find(id);
-            if (emp != null)
+            // En tu servicio o repositorio antes de borrar el empleado:
+            var empleado = _context.Empleados.Include(e => e.Usuario).FirstOrDefault(e => e.Id == id);
+            if (empleado != null)
             {
-                _context.Empleados.Remove(emp);
+                if (empleado.Usuario != null)
+                    _context.Usuarios.Remove(empleado.Usuario);
+
+                _context.Empleados.Remove(empleado);
                 _context.SaveChanges();
             }
         }

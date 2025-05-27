@@ -27,10 +27,26 @@ namespace RecursosHumanosAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Empleado emp)
+        public IActionResult Create([FromBody] EmpleadoConUsuarioRequest request)
         {
-            _servicio.Crear(emp);
-            return CreatedAtAction(nameof(Get), new { id = emp.Id }, emp);
+            var usuario = new Usuario
+            {
+                Username = request.Username ?? throw new ArgumentNullException(nameof(request.Username)),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                Rol = request.Rol ?? string.Empty
+            };
+
+            var empleado = new Empleado
+            {
+                Nombre = request.Nombre ?? throw new ArgumentNullException(nameof(request.Nombre)),
+                Cedula = request.Cedula,
+                Rol = request.Rol,
+                FechaIngreso = DateTime.UtcNow,
+                Usuario = usuario
+            };
+
+            _servicio.Crear(empleado);
+            return CreatedAtAction(nameof(Get), new { id = empleado.Id }, empleado);
         }
 
         [HttpPut("{id}")]
@@ -43,7 +59,7 @@ namespace RecursosHumanosAPI.Controllers
             if (resultado == "Empleado no encontrado")
                 return NotFound(resultado);
 
-            return Ok(resultado);
+            return Ok(new { mensaje = resultado });
         }
 
 
@@ -69,9 +85,6 @@ namespace RecursosHumanosAPI.Controllers
 
             if (!string.IsNullOrEmpty(cargo))
                 lista = lista.Where(e => e.Rol == cargo).ToList();
-
-            if (!string.IsNullOrEmpty(area))
-                lista = lista.Where(e => e.Area == area).ToList();
 
             if (!string.IsNullOrEmpty(rolUsuario))
                 lista = lista.Where(e => e.Usuario != null && e.Usuario.Rol == rolUsuario).ToList();

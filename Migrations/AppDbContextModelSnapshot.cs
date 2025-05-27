@@ -21,6 +21,40 @@ namespace Modulo_RH.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("RecursosHumanosAPI.Models.Cliente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Clientes");
+                });
+
             modelBuilder.Entity("RecursosHumanosAPI.Models.Empleado", b =>
                 {
                     b.Property<int>("Id")
@@ -32,9 +66,6 @@ namespace Modulo_RH.Migrations
                     b.Property<string>("Area")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cargo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Documento")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -44,6 +75,9 @@ namespace Modulo_RH.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rol")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UsuarioId")
@@ -81,6 +115,15 @@ namespace Modulo_RH.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("RecursosHumanosAPI.Models.Cliente", b =>
+                {
+                    b.HasOne("Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("RecursosHumanosAPI.Models.Empleado", b =>

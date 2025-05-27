@@ -5333,19 +5333,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rodri\\.nuget\\packages\\": {}
+    "/home/estudiante/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Arquitectura\\Proyecto\\RH\\Modulo_RH\\Modulo_RH.csproj",
+      "projectUniqueName": "/home/estudiante/Arquitectura/Modulo_RH/Modulo_RH.csproj",
       "projectName": "Modulo_RH",
-      "projectPath": "C:\\Arquitectura\\Proyecto\\RH\\Modulo_RH\\Modulo_RH.csproj",
-      "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
-      "outputPath": "C:\\Arquitectura\\Proyecto\\RH\\Modulo_RH\\obj\\",
+      "projectPath": "/home/estudiante/Arquitectura/Modulo_RH/Modulo_RH.csproj",
+      "packagesPath": "/home/estudiante/.nuget/packages/",
+      "outputPath": "/home/estudiante/Arquitectura/Modulo_RH/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/estudiante/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -5431,7 +5431,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -7,6 +7,8 @@ public class AppDbContext : DbContext
 
     public DbSet<Empleado> Empleados { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Cliente> Clientes { get; set; }
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

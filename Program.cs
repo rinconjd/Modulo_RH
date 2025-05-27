@@ -122,7 +122,7 @@ using (var scope = app.Services.CreateScope())
         var empleado = new Empleado
         {
             Nombre = "Administrador General",
-            Documento = "123456789",
+            Documento = "102030405",
             Rol = "Administrador",
             Area = "TI",
             FechaIngreso = DateTime.UtcNow,
@@ -140,16 +140,35 @@ using (var scope = app.Services.CreateScope())
         {
             Nombre = "Juan Pérez",
             Documento = "123456789",
-            Rol = "Analista",
+            Rol = "Empleado",
             Area = "TI",
             FechaIngreso = DateTime.UtcNow,
             Usuario = usuario2
+        };
+
+        var usuario3 = new Usuario
+        {
+            Username = "diegomez",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("dg123"),
+            Rol = "EmpleadoInventario"
+        };
+
+        var empleado3 = new Empleado
+        {
+            Nombre = "Diego Gómez",
+            Documento = "100101010",
+            Rol = "EmpleadoInventario",
+            Area = "TI",
+            FechaIngreso = DateTime.UtcNow,
+            Usuario = usuario3
         };
 
         context.Usuarios.Add(usuario);
         context.Empleados.Add(empleado);
         context.Usuarios.Add(usuario2);
         context.Empleados.Add(empleado2);
+        context.Usuarios.Add(usuario3);
+        context.Empleados.Add(empleado3);
         context.SaveChanges();
     }
 }

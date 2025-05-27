@@ -23,4 +23,19 @@ public class LoginController : ControllerBase
         var token = _jwtService.GenerateToken(user);
         return Ok(new { token });
     }
+
+    [HttpPost("Inventario")]
+    public IActionResult LoginInventario([FromBody] LoginRequest request)
+    {
+        var user = _authService.Authenticate(request.Username, request.Password);
+        if (user == null)
+            return Unauthorized("Credenciales inválidas");
+
+        if (user.Rol != "EmpleadoInventario")
+            return Forbid("No tiene permisos para ingresar a esta aplicación");
+
+        var token = _jwtService.GenerateToken(user);
+        return Ok(new { token });
+    }
+
 }

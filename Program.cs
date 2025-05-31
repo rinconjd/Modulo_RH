@@ -176,6 +176,64 @@ using (var scope = app.Services.CreateScope())
             FechaIngreso = DateTime.UtcNow,
             Usuario = usuario3
         };
+        var usuarioCliente1 = new Usuario
+        {
+            Username = "maria.ruiz@email.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("mr123"),
+            Rol = "Ordenes"
+        };
+
+        var cliente1 = new Cliente
+        {
+            Nombre = "María",
+            Apellido = "Ruiz",
+            Cedula = 123456789,
+            Correo = "maria.ruiz@email.com",
+            Telefono = "3001234567",
+            Usuario = usuarioCliente1
+        };
+
+        var usuarioCliente2 = new Usuario
+        {
+            Username = "carlos.lopez@email.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("cl123"),
+            Rol = "Ordenes"
+        };
+
+        var cliente2 = new Cliente
+        {
+            Nombre = "Carlos",
+            Apellido = "López",
+            Cedula = 987654321,
+            Correo = "carlos.lopez@email.com",
+            Telefono = "3012345678",
+            Usuario = usuarioCliente2
+        };
+
+        var usuarioCliente3 = new Usuario
+        {
+            Username = "laura.gonzalez@email.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("lg123"),
+            Rol = "Ordenes"
+        };
+
+        var cliente3 = new Cliente
+        {
+            Nombre = "Laura",
+            Apellido = "González",
+            Cedula = 456789123,
+            Correo = "laura.gonzalez@email.com",
+            Telefono = "3023456789",
+            Usuario = usuarioCliente3
+        };
+
+        // Agrega estos a la base de datos
+        context.Usuarios.Add(usuarioCliente1);
+        context.Clientes.Add(cliente1);
+        context.Usuarios.Add(usuarioCliente2);
+        context.Clientes.Add(cliente2);
+        context.Usuarios.Add(usuarioCliente3);
+        context.Clientes.Add(cliente3);
 
         context.Usuarios.Add(usuario);
         context.Empleados.Add(empleado);
@@ -183,6 +241,41 @@ using (var scope = app.Services.CreateScope())
         context.Empleados.Add(empleado2);
         context.Usuarios.Add(usuario3);
         context.Empleados.Add(empleado3);
+
+        // Busca los clientes para obtener sus Ids o Cédulas
+        var clienteMaria = context.Clientes.FirstOrDefault(c => c.Correo == "maria.ruiz@email.com");
+        var clienteCarlos = context.Clientes.FirstOrDefault(c => c.Correo == "carlos.lopez@email.com");
+        var clienteLaura = context.Clientes.FirstOrDefault(c => c.Correo == "laura.gonzalez@email.com");
+
+        // Crea transacciones de ejemplo
+        var transaccion1 = new Transaccion
+        {
+            Id = Guid.NewGuid(),
+            CompraId = Guid.NewGuid(),
+            ClienteCedula = clienteMaria?.Cedula ?? 0,
+            Monto = 150000,
+            Fecha = DateTime.UtcNow.AddDays(-2)
+        };
+
+        var transaccion2 = new Transaccion
+        {
+            Id = Guid.NewGuid(),
+            CompraId = Guid.NewGuid(),
+            ClienteCedula = clienteCarlos?.Cedula ?? 0,
+            Monto = 250000,
+            Fecha = DateTime.UtcNow.AddDays(-1)
+        };
+
+        var transaccion3 = new Transaccion
+        {
+            Id = Guid.NewGuid(),
+            CompraId = Guid.NewGuid(),
+            ClienteCedula = clienteLaura?.Cedula ?? 0,
+            Monto = 350000,
+            Fecha = DateTime.UtcNow
+        };
+
+        context.Transacciones.AddRange(transaccion1, transaccion2, transaccion3);
         context.SaveChanges();
     }
 }

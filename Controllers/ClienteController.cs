@@ -26,12 +26,39 @@ namespace RecursosHumanosAPI.Controllers
             return cliente is null ? NotFound() : Ok(cliente);
         }
 
+        // ...existing code...
         [HttpPost]
-        public IActionResult Create(Cliente cliente)
+        public IActionResult Create(ClienteConUsuarioRequest request)
         {
+            if (string.IsNullOrWhiteSpace(request.Correo) ||
+                string.IsNullOrWhiteSpace(request.Password) ||
+                string.IsNullOrWhiteSpace(request.Nombre) ||
+                string.IsNullOrWhiteSpace(request.Cedula.ToString()))
+            {
+                return BadRequest("Correo, Password, Nombre, and Cedula are required.");
+            }
+
+            var usuario = new Usuario
+            {
+                Username = request.Correo,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                Rol = "Ordenes"
+            };
+
+            var cliente = new Cliente
+            {
+                Nombre = request.Nombre,
+                Apellido = request.Apellido,
+                Cedula = request.Cedula,
+                Correo = request.Correo,
+                Telefono = request.Telefono,
+                Usuario = usuario
+            };
+
             _servicio.Crear(cliente);
             return CreatedAtAction(nameof(Get), new { id = cliente.Id }, cliente);
         }
+        // ...existing code...
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]

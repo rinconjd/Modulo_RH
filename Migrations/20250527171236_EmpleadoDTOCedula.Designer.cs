@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Modulo_RH.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250527054833_EmpleadoDTOCedula")]
+    [Migration("20250527171236_EmpleadoDTOCedula")]
     partial class EmpleadoDTOCedula
     {
         /// <inheritdoc />
@@ -35,6 +35,9 @@ namespace Modulo_RH.Migrations
                     b.Property<string>("Apellido")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Cedula")
+                        .HasColumnType("int");
 
                     b.Property<string>("Correo")
                         .IsRequired()

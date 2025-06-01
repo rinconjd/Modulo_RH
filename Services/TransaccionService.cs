@@ -18,7 +18,10 @@ namespace RecursosHumanosAPI.Services
 
         public Transaccion? ObtenerPorId(Guid id) => _repo.GetById(id);
 
-        public void Crear(Transaccion transaccion) => _repo.Create(transaccion);
+        public void Crear(Transaccion transaccion)
+        {
+            _repo.Create(transaccion);
+        }
 
         public void Actualizar(Transaccion transaccion) => _repo.Update(transaccion);
 
@@ -33,5 +36,7 @@ namespace RecursosHumanosAPI.Services
         }
 
         public void Eliminar(Guid id) => _repo.Delete(id);
+
+
     }
 }

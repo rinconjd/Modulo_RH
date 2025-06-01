@@ -45,7 +45,7 @@ public class LoginController : ControllerBase
         if (user == null)
             return Unauthorized("Credenciales inválidas");
 
-        if (user.Rol != "Clientes")
+        if (user.Rol != "Ordenes")
             return Forbid("No tiene permisos para ingresar a esta aplicación");
 
         var token = _jwtService.GenerateToken(user);

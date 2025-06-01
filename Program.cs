@@ -24,6 +24,8 @@ builder.Services.AddScoped<ITransaccionRepository, TransaccionRepository>();
 builder.Services.AddScoped<TransaccionService>();
 builder.Services.AddScoped<ITransaccionRepository, TransaccionRepository>();
 builder.Services.AddScoped<TransaccionService>();
+builder.Services.AddScoped<ArchivoConciliacionService>();
+builder.Services.AddHostedService<ArchivoSchedulerService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -66,7 +68,8 @@ builder.Services.AddAuthentication("Bearer")
             ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
             ValidAudience = builder.Configuration["JwtSettings:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
+                Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"] 
+                    ?? throw new InvalidOperationException("JwtSettings:SecretKey is not configured.")))
         };
     });
 
@@ -241,6 +244,8 @@ using (var scope = app.Services.CreateScope())
         context.Empleados.Add(empleado2);
         context.Usuarios.Add(usuario3);
         context.Empleados.Add(empleado3);
+
+        context.SaveChanges();
 
         // Busca los clientes para obtener sus Ids o Cédulas
         var clienteMaria = context.Clientes.FirstOrDefault(c => c.Correo == "maria.ruiz@email.com");

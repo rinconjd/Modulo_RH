@@ -48,10 +48,10 @@ namespace RecursosHumanosAPI.Controllers
             var cliente = new Cliente
             {
                 Nombre = request.Nombre,
-                Apellido = request.Apellido,
+                Apellido = request.Apellido ?? string.Empty,
                 Cedula = request.Cedula,
                 Correo = request.Correo,
-                Telefono = request.Telefono,
+                Telefono = request.Telefono ?? string.Empty,
                 Usuario = usuario
             };
 
@@ -104,5 +104,13 @@ namespace RecursosHumanosAPI.Controllers
 
             return Ok(lista);
         }
+
+        [HttpGet("cedula/{cedula}")]
+        public IActionResult GetByCedula(int cedula)
+        {
+            var cliente = _servicio.ObtenerTodos().FirstOrDefault(c => c.Cedula == cedula);
+            return cliente is null ? NotFound() : Ok(cliente);
+        }
     }
 }
+

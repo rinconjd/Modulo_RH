@@ -95,4 +95,21 @@ public class ConciliacionController : ControllerBase
             return StatusCode(500, "Error interno al intentar comunicarse con el servicio externo");
         }
     }
+
+    [HttpGet("archivo")]
+    public IActionResult ObtenerArchivoConciliacion()
+    {
+        var contenido = _archivoService.GenerarContenidoTransacciones();
+
+        if (string.IsNullOrWhiteSpace(contenido))
+        {
+            Console.WriteLine("No hay transacciones para procesar.");
+            return NotFound("No hay transacciones para procesar.");
+        }
+
+        Console.WriteLine("Contenido generado para el archivo:");
+        Console.WriteLine(contenido);
+
+        return Ok(new { contenido });
+    }
 }

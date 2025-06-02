@@ -42,7 +42,7 @@ namespace RecursosHumanosAPI.Controllers
             {
                 Username = request.Correo,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                Rol = "Ordenes"
+                Rol = "Cliente"
             };
 
             var cliente = new Cliente
@@ -61,7 +61,6 @@ namespace RecursosHumanosAPI.Controllers
         // ...existing code...
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
         public IActionResult Update(int id, [FromBody] Cliente cliente)
         {
             cliente.Id = id;
@@ -109,6 +108,13 @@ namespace RecursosHumanosAPI.Controllers
         public IActionResult GetByCedula(int cedula)
         {
             var cliente = _servicio.ObtenerTodos().FirstOrDefault(c => c.Cedula == cedula);
+            return cliente is null ? NotFound() : Ok(cliente);
+        }
+
+        [HttpGet("correo/{correo}")]
+        public IActionResult GetByCorreo(string correo)
+        {
+            var cliente = _servicio.ObtenerTodos().FirstOrDefault(c => c.Correo == correo);
             return cliente is null ? NotFound() : Ok(cliente);
         }
     }

@@ -152,14 +152,14 @@ using (var scope = app.Services.CreateScope())
         {
             Username = "juanperez",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("jp123"),
-            Rol = "Clientes"
+            Rol = "Empleado"
         };
 
         var empleado2 = new Empleado
         {
             Nombre = "Juan Pérez",
             Cedula = "123456789",
-            Rol = "Clientes",
+            Rol = "Empleado",
             FechaIngreso = DateTime.UtcNow,
             Usuario = usuario2
         };
@@ -183,7 +183,7 @@ using (var scope = app.Services.CreateScope())
         {
             Username = "maria.ruiz@email.com",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("mr123"),
-            Rol = "Ordenes"
+            Rol = "Cliente"
         };
 
         var cliente1 = new Cliente
@@ -200,7 +200,7 @@ using (var scope = app.Services.CreateScope())
         {
             Username = "carlos.lopez@email.com",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("cl123"),
-            Rol = "Ordenes"
+            Rol = "Cliente"
         };
 
         var cliente2 = new Cliente
@@ -217,7 +217,7 @@ using (var scope = app.Services.CreateScope())
         {
             Username = "laura.gonzalez@email.com",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("lg123"),
-            Rol = "Ordenes"
+            Rol = "Cliente"
         };
 
         var cliente3 = new Cliente

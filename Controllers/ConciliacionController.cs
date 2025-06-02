@@ -61,12 +61,12 @@ public class ConciliacionController : ControllerBase
 
         if (string.IsNullOrWhiteSpace(contenido))
         {
-            Console.WriteLine("No hay transacciones para procesar."); // Log para depuración
+            Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] No hay transacciones para procesar.");
             return BadRequest("No hay transacciones para procesar.");
         }
 
         // Log para verificar el contenido generado
-        Console.WriteLine("Contenido generado para el archivo:");
+        Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] Contenido generado para el archivo:");
         Console.WriteLine(contenido);
 
         using var httpClient = new HttpClient();

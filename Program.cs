@@ -96,11 +96,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 var app = builder.Build();
 
 // Configura Swagger solo en entorno de desarrollo (puedes quitar el if si lo quieres siempre)
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 // Inicializa la base de datos (Sólo para entorno de desarrollo)
 using (var scope = app.Services.CreateScope())

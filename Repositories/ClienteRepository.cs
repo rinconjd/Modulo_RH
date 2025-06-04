@@ -47,5 +47,14 @@ namespace RecursosHumanosAPI.Repositories
                 _context.SaveChanges();
             }
         }
+
+        public void Detach(Cliente cliente)
+        {
+            var entry = _context.Entry(cliente);
+            if (entry != null)
+            {
+                entry.State = EntityState.Detached; // Desconecta la entidad del contexto
+            }
+        }
     }
 }

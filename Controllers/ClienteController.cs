@@ -64,12 +64,13 @@ namespace RecursosHumanosAPI.Controllers
         public IActionResult Update(int id, [FromBody] Cliente cliente)
         {
             cliente.Id = id;
+
             var resultado = _servicio.ActualizarCliente(cliente);
 
             if (resultado == "Cliente no encontrado")
                 return NotFound(resultado);
 
-            return Ok(resultado);
+            return Ok(new { mensaje = resultado });
         }
 
         [HttpDelete("{id}")]
@@ -109,6 +110,27 @@ namespace RecursosHumanosAPI.Controllers
         {
             var cliente = _servicio.ObtenerTodos().FirstOrDefault(c => c.Cedula == cedula);
             return cliente is null ? NotFound() : Ok(cliente);
+        }
+
+        [HttpPut("cedula/{cedula}")]
+        public IActionResult UpdateByCedula(int cedula, [FromBody] Cliente cliente)
+        {
+            var clienteExistente = _servicio.ObtenerTodos().FirstOrDefault(c => c.Cedula == cedula);
+            if (clienteExistente == null)
+                return NotFound("Cliente no encontrado");
+
+            // Actualiza los datos del cliente existente
+            clienteExistente.Nombre = cliente.Nombre;
+            clienteExistente.Apellido = cliente.Apellido;
+            clienteExistente.Correo = cliente.Correo;
+            clienteExistente.Telefono = cliente.Telefono;
+
+            var resultado = _servicio.ActualizarCliente(clienteExistente);
+
+            if (resultado == "Cliente no encontrado")
+                return NotFound(resultado);
+
+            return Ok(new { mensaje = resultado });
         }
 
         [HttpGet("correo/{correo}")]

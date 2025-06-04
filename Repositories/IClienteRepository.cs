@@ -9,5 +9,7 @@ namespace RecursosHumanosAPI.Repositories
         void Create(Cliente cliente);
         void Update(Cliente cliente);
         void Delete(int id);
+
+        void Detach(Cliente cliente);
     }
 }

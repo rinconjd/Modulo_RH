@@ -26,6 +26,10 @@ namespace RecursosHumanosAPI.Services
             if (cliExistente == null)
                 return "Cliente no encontrado";
 
+            // Desconecta la entidad existente del contexto
+            _repo.Detach(cliExistente);
+
+            // Actualiza el cliente
             _repo.Update(cliente);
 
             return "Cliente actualizado";
